@@ -1,0 +1,376 @@
+body{
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f2f2;
+}
+
+/* ==== MENU ==== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 50px;
+
+  background: linear-gradient(90deg, #0f172a, #111827);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.08);
+}
+
+/* LOGO neon gradient */
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+
+  background: linear-gradient(90deg, #00f5ff, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* LINKS */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* welcome text */
+.welcome {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 6px 12px;
+  margin-right: 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: #e5e7eb;
+
+  background: rgba(0, 245, 255, 0.08);
+  border: 1px solid rgba(0, 245, 255, 0.25);
+  border-radius: 999px;
+
+  backdrop-filter: blur(8px);
+
+  box-shadow:
+    0 0 10px rgba(0, 245, 255, 0.15),
+    inset 0 0 10px rgba(0, 245, 255, 0.05);
+
+  position: relative;
+  overflow: hidden;
+
+  animation: glowPulse 3s infinite ease-in-out;
+}
+
+/* delikatny moving shine */
+.welcome::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 60%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(0, 245, 255, 0.25),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+  animation: shine 4s infinite;
+}
+
+/* animacja poświaty */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 10px rgba(0, 245, 255, 0.15),
+      inset 0 0 10px rgba(0, 245, 255, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 18px rgba(0, 245, 255, 0.35),
+      inset 0 0 12px rgba(0, 245, 255, 0.08);
+  }
+}
+
+/* animowany błysk */
+@keyframes shine {
+  0% {
+    left: -60%;
+  }
+  100% {
+    left: 120%;
+  }
+}
+
+/* link base */
+.nav-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  position: relative;
+  transition: 0.3s;
+}
+
+/* neon hover */
+.nav-links a:hover {
+  color: #00f5ff;
+  text-shadow: 0 0 8px #00f5ff;
+  background: rgba(0, 245, 255, 0.08);
+}
+
+/* ACTIVE TAB */
+.nav-links a.active {
+  color: #00f5ff;
+  background: rgba(0, 245, 255, 0.15);
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.4);
+  border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+/* underline glow animation */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #00f5ff, #7c3aed);
+  transition: 0.3s;
+}
+
+.nav-links a:hover::after {
+  width: 80%;
+}
+
+.content{
+    padding: 30px;
+}
+
+/* ==== task ==== */
+
+
+/* ==== projects ==== */
+
+
+/* ==== calendar ==== */
+
+/* Tło całej strony */
+body {
+  background: #f7f9fc;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Kalendarz */
+#calendar {
+  max-width: 1100px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Nagłówek */
+.fc-toolbar-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* Przyciski */
+.fc-button {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  color: #333 !important;
+  border-radius: 8px !important;
+  padding: 6px 12px !important;
+  transition: 0.2s;
+}
+
+.fc-button:hover {
+  background: #f1f5f9 !important;
+}
+
+/* Dzień */
+.fc-daygrid-day {
+  transition: 0.2s;
+}
+
+.fc-daygrid-day:hover {
+  background: #f9fafb;
+}
+
+/* Dzisiejszy dzień */
+.fc-day-today {
+  background: #eef2ff !important;
+}
+
+/* Event */
+.fc-event {
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 4px 6px;
+  font-size: 13px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+}
+
+/* Event hover */
+.fc-event:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+/* Siatka */
+.fc-scrollgrid {
+  border: none !important;
+}
+
+/* Linie */
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border-color: #f1f5f9;
+}
+
+/* kontener dnia */
+.fc-daygrid-day {
+  position: relative;
+}
+
+/* przycisk + */
+.add-event-btn {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 22px;
+  height: 22px;
+  background: #1ed14b;
+  color: white;
+  font-size: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  transform: scale(0.8);
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+/* pokazanie na hover */
+.fc-daygrid-day:hover .add-event-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* hover efekt */
+.add-event-btn:hover {
+  background: #04f340;
+}
+
+/* tło */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s;
+}
+
+/* aktywny */
+.modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* okno */
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    width: 320px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    animation: scaleIn 0.2s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* input */
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+#eventDescription {
+    width: 100%;
+    min-height: 40px;          /* początkowa wysokość */
+    max-height: 300px;         /* maksymalna wysokość */
+    resize: vertical;          /* pozwala użytkownikowi przeciągać */
+    overflow-y: auto;          /* pojawia się pasek przewijania jeśli tekst za długi */
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* przyciski */
+.modal-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#saveEvent {
+  background: #6366f1;
+  color: white;
+}
+
+#closeModal {
+  background: #e5e7eb;
+}
+
+.add-event-btn-timegrid {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    cursor: pointer;
+    font-weight: bold;
+    color: green;
+    font-size: 14px;
+}
+.fc-timegrid-slot {
+    position: relative;
+}
+
+/* ==== logowanie ==== */
