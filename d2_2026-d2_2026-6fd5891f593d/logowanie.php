@@ -36,4 +36,8 @@
         Nie masz konta?
         <a href="index.php?page=rejestrowanie">Zarejestruj się</a>
     </p>
+    <p class="login-register-link">
+        Zapomniałeś hasła?
+        <a href="index.php?page=new_password">Przypomnij hasło</a>
+    </p>
 </div>

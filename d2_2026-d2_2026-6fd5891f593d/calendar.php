@@ -1,142 +1,165 @@
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-
-<div id="calendar"></div>
-<div id="eventModal" class="modal">
-  <div class="modal-content">
-    <h3>Nowe zadanie</h3>
-
-    <input type="text" id="eventTitle" placeholder="Nazwa zadania">
-    <br/>
-    <br/>
-    <h3>Opis zadania (nieobowiązkowy)</h3>
-    <textarea id="eventDescription" placeholder="Dodaj opis zadania"></textarea>
-
-    <div class="modal-actions">
-      <button id="saveEvent">Zapisz</button>
-      <button id="closeModal">Anuluj</button>
-    </div>
-  </div>
+<div class="nav-calendar">
+    <button class="view-btn" onclick="setView('day')">Dzień</button>
+    <button class="view-btn" onclick="setView('week')">Tydzień</button>
+    <button class="view-btn active" onclick="setView('month')">Miesiąc</button>
 </div>
 
+<div id="calendar" style="height: 800px;"></div>
+
+<script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
+
 <script>
-    let calendar;
-    document.addEventListener('DOMContentLoaded', function() {
-        calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
-        initialView: 'dayGridMonth',
 
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
+const Calendar = tui.Calendar;
 
-        buttonText: {
-            today: 'Dziś',
-            month: 'Miesiąc',
-            week: 'Tydzień',
-            day: 'Dzień'
-        },
-
-        events: 'events.php', 
-
-        /* kliknięcie w kwadracik z datą
-        dateClick: function(info) {
-        let title = prompt("Nazwa zadania:");
-        if (title) {
-            fetch('add_event.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                title: title,
-                date: info.dateStr
-            })
-            }).then(() => calendar.refetchEvents());
-        }
-        },*/
-
-        eventContent: function(arg) {
-        return {
-            html: `
-            <div style="padding:2px 4px;">
-                <div style="font-size:11px; opacity:0.8;">
-                ${arg.timeText || ''}
-                </div>
-                <div style="font-weight:600;">
-                ${arg.event.title}
-                </div>
-            </div>
-            `
-        };
-        }, 
-
-        selectable: true, 
-        dateClick: function(info) {
-            openModal(info.dateStr);
-        },
-
-
-        // kliknięcie w plusik
-        dayCellDidMount: function(info) {
-            const plus = document.createElement("div");
-            plus.innerHTML = "+";
-            plus.className = "add-event-btn";
-
-            plus.onclick = function(e) {
-                e.stopPropagation();
-                openModal(info.dateStr);
-            };
-
-            info.el.appendChild(plus);
-            }
-    });
-
-  calendar.render();
-  
+const calendar = new Calendar('#calendar', {
+    defaultView: 'month',
+    useCreationPopup: true,
+    useDetailPopup: true,
 });
 
-let selectedDate = null;
+document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
 
-const modal = document.getElementById("eventModal");
-const input = document.getElementById("eventTitle");
-const textarea = document.getElementById("eventDescription");
+        btn.classList.add('active');
+    });
+});
 
-function openModal(date) {
-    selectedDate = date;
-    modal.classList.add("active");
-    input.value = "";
-    input.focus();
+
+function formatDateLocal(date) {
+    const pad = (n) => n.toString().padStart(2, '0');
+
+    return (
+    date.getFullYear() + '-' +
+    pad(date.getMonth() + 1) + '-' +
+    pad(date.getDate()) + ' ' +
+    pad(date.getHours()) + ':' +
+    pad(date.getMinutes()) + ':00'
+    );
 }
 
-function closeModal() {
-    modal.classList.remove("active");
+// 🔥 kliknięcie → dodaj task
+calendar.on('selectDateTime', function(ev) {
+    openTaskModal(ev.start, ev.end);
+});
+
+function setView(view) {
+    calendar.changeView(view);
 }
 
-document.getElementById("closeModal").onclick = closeModal;
+// 🔄 pobierz z bazy
+async function loadEvents() {
+    const res = await fetch('events.php');
+    const data = await res.json();
 
-document.getElementById("saveEvent").onclick = function() {
-    const title = input.value;
-    const description = textarea.value;
+    calendar.clear();
 
-    if (!title) return;
+    calendar.createEvents(data.map(e => ({
+        id: e.id,
+        calendarId: '1',
+        title: e.title,
+        start: e.start,
+        end: e.end,
+        backgroundColor: e.backgroundColor
+    })));
+}
 
-    fetch('add_event.php', {
+function formatForInput(date) {
+    const d = new Date(date);
+    const pad = (n) => n.toString().padStart(2, '0');
+
+    return (
+    d.getFullYear() + '-' +
+    pad(d.getMonth() + 1) + '-' +
+    pad(d.getDate()) + 'T' +
+    pad(d.getHours()) + ':' +
+    pad(d.getMinutes())
+    );
+}
+
+function openTaskModal(start, end) {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+
+    modal.innerHTML = `
+        <div class="modal">
+        <h3>Nowe zadanie</h3>
+
+        <label>Nazwa</label>
+        <input id="title" placeholder="Np. Spotkanie z klientem">
+
+        <label>Opis</label>
+        <textarea id="desc" placeholder="Szczegóły zadania..."></textarea>
+
+        <label>Data od</label>
+        <input type="datetime-local" id="start">
+
+        <label>Data do</label>
+        <input type="datetime-local" id="end">
+
+        <label>Status</label>
+        <select id="status">
+            <option value="todo">Do zrobienia</option>
+            <option value="in_progress">W trakcie</option>
+            <option value="completed">Zrobione</option>
+        </select>
+
+        <label>Priorytet</label>
+        <select id="priority">
+            <option value="low">Niski</option>
+            <option value="medium">Średni</option>
+            <option value="high">Wysoki</option>
+        </select>
+
+        <label>Kolor</label>
+        <input type="color" id="color" value="#3b82f6">
+
+        <div class="modal-actions">
+            <button class="btn btn-secondary" id="close">Anuluj</button>
+            <button class="btn btn-primary" id="save">Zapisz</button>
+        </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    modal.querySelector('#start').value = formatForInput(start);
+    modal.querySelector('#end').value = formatForInput(end);
+
+    // zamknięcie
+    modal.querySelector('#close').onclick = () => modal.remove();
+
+    // zapis
+    modal.querySelector('#save').onclick = async () => {
+        const task = {
+        title: modal.querySelector('#title').value,
+        description: modal.querySelector('#desc').value,
+        status: modal.querySelector('#status').value,
+        priority: modal.querySelector('#priority').value,
+        color: modal.querySelector('#color').value,
+        start: formatDateLocal(new Date(modal.querySelector('#start').value)),
+        end: formatDateLocal(new Date(modal.querySelector('#end').value))
+        };
+
+        if (!task.title) {
+        alert('Podaj nazwę');
+        return;
+        }
+
+        await fetch('add_event.php', {
         method: 'POST',
-        headers: {
-        'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-        title: title,
-        description: description,
-        date: selectedDate
-        })
-    })
-    .then(res => res.text())
-    .then(data => {
-        console.log(data);
-        closeModal();
-        calendar.refetchEvents();
-    })
-    .catch(err => console.error(err));
-};
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(task)
+        });
 
+        calendar.clearGridSelections();
+
+        modal.remove();
+        loadEvents();
+    };
+}
+
+
+loadEvents();
 </script>

@@ -25,7 +25,7 @@ try {
     if ($result) {
         $_SESSION['username'] = $username;
         $_SESSION['user_id']  = $result['id'];
-        header("Location: index.php?page=index");
+        header("Location: index.php?page=dashboard");
     } else {
         header("Location: index.php?page=logowanie&error=invalid");
     }

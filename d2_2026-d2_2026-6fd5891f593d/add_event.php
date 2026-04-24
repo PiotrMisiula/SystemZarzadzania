@@ -3,6 +3,8 @@ session_start();
 
 header('Content-Type: application/json');
 
+$conn = new mysqli("localhost", "root", "", "systemzarzadzania");
+
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (!isset($_SESSION['user_id'])) {
@@ -10,17 +12,21 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-if (!$data || !isset($data['title'], $data['date'])) {
+if (!$data || !isset($data['title'], $data['start'])) {
     echo json_encode(["status" => "error", "message" => "Brak wymaganych danych"]);
     exit;
 }
 
-$conn = new mysqli("localhost", "root", "", "systemzarzadzania");
+$title = $conn->real_escape_string($data['title']);
+$desc = $conn->real_escape_string($data['description']);
+$startDate = $data['start'];   
+$deadline = $data['end'];
+$color = $conn->real_escape_string($data['color']);
+$create_by = $_SESSION['user_id'];
+$priority = $data['priority'];
 
-$priority = "low";
-
-$stmt = $conn->prepare("INSERT INTO tasks (created_by, title, description, priority, deadline, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
-$stmt->bind_param("issss", $_SESSION['user_id'], $data['title'], $data['description'], $priority, $data['date']);
+$stmt = $conn->prepare("INSERT INTO tasks (created_by, title, description, priority, start_date, deadline, created_at, backgroundColor) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)");
+$stmt->bind_param("issssss", $create_by, $title, $desc, $priority, $startDate, $deadline, $color);
 
 if (!$stmt->execute()) {
     echo json_encode(["status" => "error", "message" => $stmt->error]);

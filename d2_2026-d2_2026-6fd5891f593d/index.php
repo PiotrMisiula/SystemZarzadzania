@@ -3,7 +3,7 @@
 
     $page = $_GET['page'] ?? 'dashboard';
 
-    if (!isset($_SESSION['username']) && $page !== 'logowanie' && $page !== 'rejestrowanie') {
+    if (!isset($_SESSION['username']) && $page !== 'logowanie' && $page !== 'rejestrowanie' && $page !== 'new_password') {
         header("Location: ?page=logowanie");
         exit();
     }
@@ -11,8 +11,9 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>System zarz¹dzania</title>
+        <title>System zarządzania</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css">
     </head>
     <body>
         <div class="tlo">
@@ -43,6 +44,10 @@
 
                         case 'dashboard':
                             include 'dashboard.php';
+                            break;
+
+                        case 'new_password':
+                            include 'new_password.php';
                             break;
                     }
                 ?>
