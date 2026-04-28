@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+DE+SAS:wght@100..400&display=swap');
+
 body{
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -169,6 +172,42 @@ body{
   gap: 4px;
 }
 
+.nav-calendar .nav {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  margin-left: 40px;
+}
+
+.nav-calendar .nav button {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: 0.2s;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+#today {
+  color: #7c3aed;
+}
+
+.nav-calendar .nav button:hover {
+  background: #f3f4f6;
+}
+
+#current-date {
+  margin-top: 7px;
+  margin-left: 40px;
+  font-weight: 600;
+  font-size: 25px;
+  font-family: "Playwrite DE SAS", cursive;
+}
+
 .view-btn {
   border: none;
   border-radius: 10px;
@@ -288,6 +327,54 @@ body{
 @keyframes scaleIn {
   from {transform: scale(0.9)}
   to {transform: scale(1)}
+}
+
+/* Styl dla modala potwierdzenia */
+.confirm-modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: modalIn 0.3s ease-out;
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.confirm-modal h3 {
+    margin-top: 0;
+    color: #1f2937;
+}
+
+.confirm-modal p {
+    color: #6b7280;
+    margin-bottom: 2rem;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Przycisk usuwania - czerwony */
+.btn-danger {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
 }
 
 /* ==== logowanie ==== */
