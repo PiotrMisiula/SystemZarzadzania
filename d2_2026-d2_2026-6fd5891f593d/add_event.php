@@ -17,21 +17,21 @@ if (!$data || !isset($data['title'], $data['start'])) {
     exit;
 }
 
-$title = $conn->real_escape_string($data['title']);
-$desc = $conn->real_escape_string($data['description']);
-$startDate = $data['start'];   
+$title = isset($data['title']) ? $data['title'] : '';
+$desc = isset($data['description']) ? $data['description'] : '';
+$startDate = $data['start'];
 $deadline = $data['end'];
-$color = $conn->real_escape_string($data['color']);
+$color = isset($data['color']) ? $data['color'] : '#3b82f6';
 $create_by = $_SESSION['user_id'];
 $priority = $data['priority'];
+$status = isset($data['status']) ? $data['status'] : 'todo';
 
-$stmt = $conn->prepare("INSERT INTO tasks (created_by, title, description, priority, start_date, deadline, created_at, backgroundColor) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)");
-$stmt->bind_param("issssss", $create_by, $title, $desc, $priority, $startDate, $deadline, $color);
+$stmt = $conn->prepare("INSERT INTO tasks (created_by, title, description, status, priority, start_date, deadline, created_at, backgroundColor) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
+$stmt->bind_param("isssssss", $create_by, $title, $desc, $status, $priority, $startDate, $deadline, $color);
 
 if (!$stmt->execute()) {
     echo json_encode(["status" => "error", "message" => $stmt->error]);
-    exit;    
+    exit;
 }
 
 echo json_encode(["status" => "ok"]);
-?>

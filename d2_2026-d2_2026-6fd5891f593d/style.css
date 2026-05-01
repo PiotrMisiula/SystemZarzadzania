@@ -1,7 +1,6 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Playwrite+DE+SAS:wght@100..400&display=swap');
 
-body{
+body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   background: #f2f2f2;
@@ -74,12 +73,10 @@ body{
   width: 60%;
   height: 100%;
 
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(0, 245, 255, 0.25),
-    transparent
-  );
+  background: linear-gradient(120deg,
+      transparent,
+      rgba(0, 245, 255, 0.25),
+      transparent);
 
   transform: skewX(-20deg);
   animation: shine 4s infinite;
@@ -87,11 +84,14 @@ body{
 
 /* animacja poświaty */
 @keyframes glowPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow:
       0 0 10px rgba(0, 245, 255, 0.15),
       inset 0 0 10px rgba(0, 245, 255, 0.05);
   }
+
   50% {
     box-shadow:
       0 0 18px rgba(0, 245, 255, 0.35),
@@ -104,6 +104,7 @@ body{
   0% {
     left: -60%;
   }
+
   100% {
     left: 120%;
   }
@@ -150,7 +151,7 @@ body{
   width: 80%;
 }
 
-.content{
+.content {
   padding: 30px;
 }
 
@@ -241,7 +242,7 @@ body{
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -256,7 +257,7 @@ body{
   padding: 25px;
   width: 420px;
   border-radius: 14px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   animation: scaleIn 0.2s ease;
 }
 
@@ -320,61 +321,108 @@ body{
 }
 
 @keyframes fadeIn {
-  from {opacity: 0}
-  to {opacity: 1}
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
 }
 
 @keyframes scaleIn {
-  from {transform: scale(0.9)}
-  to {transform: scale(1)}
+  from {
+    transform: scale(0.9)
+  }
+
+  to {
+    transform: scale(1)
+  }
 }
 
 /* Styl dla modala potwierdzenia */
 .confirm-modal {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    animation: modalIn 0.3s ease-out;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: modalIn 0.3s ease-out;
 }
 
 @keyframes modalIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .confirm-modal h3 {
-    margin-top: 0;
-    color: #1f2937;
+  margin-top: 0;
+  color: #1f2937;
 }
 
 .confirm-modal p {
-    color: #6b7280;
-    margin-bottom: 2rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
 }
 
 .confirm-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
 }
 
 /* Przycisk usuwania - czerwony */
 .btn-danger {
-    background-color: #ef4444;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .btn-danger:hover {
-    background-color: #dc2626;
+  background-color: #dc2626;
+}
+
+.btn-ok {
+  background-color: #5cd606;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-ok:hover {
+  background-color: #4fbe05;
+}
+
+/* Ukrywamy wszystkie ikony w popupie (ludzik, walizka, lokalizacja) */
+.toastui-calendar-detail-item .toastui-calendar-icon {
+  display: none !important;
+}
+
+/* Przesuwamy treść do lewej, bo ikony już nie zajmują miejsca */
+.toastui-calendar-detail-item {
+  margin-left: 0 !important;
+  padding-left: 10px !important;
+}
+
+/* Usuwamy puste sekcje, które mogą dodawać niepotrzebne odstępy */
+.toastui-calendar-popup-section {
+  border: none !important;
 }
 
 /* ==== logowanie ==== */
