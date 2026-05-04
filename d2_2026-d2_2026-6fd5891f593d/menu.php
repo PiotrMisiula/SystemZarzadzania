@@ -1,5 +1,5 @@
 <?php
-    $page = $_GET['page'] ?? 'dashboard';
+$page = $_GET['page'] ?? 'dashboard';
 ?>
 <nav class="navbar">
     <div class="logo">System zarządzania zadaniami</div>

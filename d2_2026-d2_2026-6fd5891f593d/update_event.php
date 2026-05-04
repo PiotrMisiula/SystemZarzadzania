@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 header('Content-Type: application/json');
@@ -20,7 +20,7 @@ if (!isset($data['id']) || !isset($data['title'])) {
 $id_event = $conn->real_escape_string($data['id']);
 $title = $conn->real_escape_string($data['title']);
 $desc = isset($data['description']) ? $data['description'] : '';
-$startDate = $data['start'];   
+$startDate = $data['start'];
 $deadline = $data['end'];
 $color = $conn->real_escape_string($data['color']);
 $create_by = $_SESSION['user_id'];
@@ -38,5 +38,3 @@ if ($stmt->execute()) {
 
 $stmt->close();
 $conn->close();
-
-?>

@@ -35,3 +35,6 @@ if (!$stmt->execute()) {
 }
 
 echo json_encode(["status" => "ok"]);
+
+$conn->close();
+$stmt->close();

@@ -27,3 +27,4 @@ while ($row = $result->fetch_assoc()) {
 }
 
 echo json_encode($events);
+$conn->close();

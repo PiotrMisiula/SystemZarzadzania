@@ -23,7 +23,7 @@ $user_id = $_SESSION['user_id'];
 $stmt = $conn->prepare("DELETE FROM tasks WHERE id = ? AND created_by = ?");
 $stmt->bind_param("si", $id_event, $user_id);
 
-if  (!$stmt->execute()) {
+if (!$stmt->execute()) {
     echo json_encode(["status" => "error", "message" => $stmt->error]);
     exit;
 }
@@ -37,4 +37,3 @@ echo json_encode(["status" => "ok"]);
 
 $stmt->close();
 $conn->close();
-?>
