@@ -1,58 +1,68 @@
 <?php
-    session_start();
+session_start();
 
-    $page = $_GET['page'] ?? 'dashboard';
+$page = $_GET['page'] ?? 'dashboard';
 
-    if (!isset($_SESSION['username']) && $page !== 'logowanie' && $page !== 'rejestrowanie' && $page !== 'new_password') {
-        header("Location: ?page=logowanie");
-        exit();
-    }
+if (!isset($_SESSION['username']) && $page !== 'logowanie' && $page !== 'rejestrowanie' && $page !== 'new_password') {
+    header("Location: ?page=logowanie");
+    exit();
+}
 ?>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>System zarządzania</title>
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    </head>
-    <body>
-        <div class="tlo">
-            <?php include 'menu.php'; ?>
-            <div class="content">
-                <?php 
-                    switch($page)
-                    {
-                        case 'my_tasks':
-                            include 'my_tasks.php';
-                            break;
-                        
-                        case 'projects':
-                            include 'projects.php';
-                            break;
-                        
-                        case 'calendar':
-                            include 'calendar.php';
-                            break;
 
-                        case 'logowanie':
-                            include 'logowanie.php';
-                            break;
+<head>
+    <meta charset="utf-8">
+    <title>System zarządzania</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
 
-                        case 'rejestrowanie':
-                            include 'rejestrowanie.php';
-                            break;
+<body>
+    <div class="tlo">
+        <?php include 'menu.php'; ?>
+        <div class="content">
+            <?php
+            switch ($page) {
+                case 'my_tasks':
+                    include 'my_tasks.php';
+                    break;
 
-                        case 'dashboard':
-                            include 'dashboard.php';
-                            break;
+                case 'projects':
+                    include 'projects.php';
+                    break;
 
-                        case 'new_password':
-                            include 'new_password.php';
-                            break;
-                    }
-                ?>
-            </div>  
+                case 'project_view':
+                    include 'project_view.php';
+                    break;
+
+                case 'calendar':
+                    include 'calendar.php';
+                    break;
+
+                case 'logowanie':
+                    include 'logowanie.php';
+                    break;
+
+                case 'rejestrowanie':
+                    include 'rejestrowanie.php';
+                    break;
+
+                case 'dashboard':
+                    include 'dashboard.php';
+                    break;
+
+                case 'edit_account':
+                    include 'edit_account.php';
+                    break;
+
+                case 'new_password':
+                    include 'new_password.php';
+                    break;
+            }
+            ?>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

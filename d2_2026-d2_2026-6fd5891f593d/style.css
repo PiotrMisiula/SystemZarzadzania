@@ -178,7 +178,8 @@ body {
   font-family: "Playwrite DE SAS", cursive;
 }
 
-.tasks-count {
+.tasks-count,
+.btn-add {
   background: linear-gradient(90deg, #3b82f6, #8b5cf6);
   color: white;
   padding: 6px 16px;
@@ -186,6 +187,14 @@ body {
   font-weight: 600;
   font-size: 14px;
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-add button {
+  background: none;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
 }
 
 .tasks-grid {
@@ -208,6 +217,12 @@ body {
 
 .task-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+  border-color: #e5e7eb;
+}
+
+.btn-add:hover {
+  transform: translateX(-0.5px);
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
   border-color: #e5e7eb;
 }
