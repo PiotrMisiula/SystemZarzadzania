@@ -32,8 +32,16 @@ if (!isset($_SESSION['username']) && $page !== 'logowanie' && $page !== 'rejestr
                     include 'projects.php';
                     break;
 
+                case 'public_projects':
+                    include 'public_projects.php';
+                    break;
+
                 case 'project_view':
                     include 'project_view.php';
+                    break;
+                    
+                case 'project_members':
+                    include 'project_members.php';
                     break;
 
                 case 'calendar':

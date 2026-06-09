@@ -12,7 +12,8 @@ $projectsActive =
             <span class="welcome">Witaj, <?= htmlspecialchars($_SESSION['username']) ?>!</span>
             <a class="<?= $page == 'dashboard' ? 'active' : '' ?>" href="index.php?page=dashboard">Dashboard</a>
             <a class="<?= $page == 'my_tasks' ? 'active' : '' ?>" href="index.php?page=my_tasks">Zadania</a>
-            <a class="<?= $projectsActive ? 'active' : '' ?>" href="index.php?page=projects">Projekty</a>
+            <a class="<?= $projectsActive ? 'active' : '' ?>" href="index.php?page=projects">Moje Projekty</a>
+            <a class="<?= $page == 'public_projects' ? 'active' : '' ?>" href="index.php?page=public_projects">Publiczne Projekty</a>
             <a class="<?= $page == 'calendar' ? 'active' : '' ?>" href="index.php?page=calendar">Kalendarz</a>
             <a class="<?= $page == 'edit_account' ? 'active' : '' ?>" href="index.php?page=edit_account">Konto</a>
             <a href="logout.php">Wyloguj się</a>

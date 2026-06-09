@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?page=logowanie");
@@ -12,6 +12,7 @@ if (isset($_POST['edit_task'])) {
     $task_id = $_POST['task_id'];
     $project_id = !empty($_POST['project_id']) ? $_POST['project_id'] : null;
     $deadline = !empty($_POST['deadline']) ? $_POST['deadline'] : null;
+    $start_date = !empty($_POST['start_date']) ? $_POST['start_date'] : date('Y-m-d H:i:s');
 
     $updateStmt = $conn->prepare("
         UPDATE tasks
@@ -28,7 +29,7 @@ if (isset($_POST['edit_task'])) {
         $_POST['priority'],
         $deadline,
         $_POST['backgroundColor'],
-        $_POST['start_date'],
+        $start_date,
         $task_id,
         $user_id
     );
@@ -41,6 +42,7 @@ if (isset($_POST['edit_task'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $project_id = !empty($_POST['project_id']) ? $_POST['project_id'] : null;
     $deadline = !empty($_POST['deadline']) ? $_POST['deadline'] : null;
+    $start_date = !empty($_POST['start_date']) ? $_POST['start_date'] : date('Y-m-d H:i:s');
 
     $addStmt = $conn->prepare("
         INSERT INTO tasks 
@@ -58,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_POST['priority'],
         $deadline,
         $_POST['backgroundColor'],
-        $_POST['start_date']
+        $start_date
     );
 
     $addStmt->execute();
@@ -131,7 +133,7 @@ function priorityPL($p) {
                 <div class="task-meta">
                     <div><b>Projekt:</b> <?= htmlspecialchars($row['project_name'] ?? 'Bez projektu') ?></div>
                     <div><b>Autor:</b> <?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) ?></div>
-                    <div><b>Początek zadania:</b> <?= date('d.m.Y H:i', strtotime($row['start_date'])) ?></div>
+                    <div><b>Początek zadania:</b> <?= !empty($row['start_date']) ? date('d.m.Y H:i', strtotime($row['start_date'])) : 'Brak' ?></div>
                     <div>
                         <b>Koniec zadania:</b>
                         <?= !empty($row['deadline']) ? date('d.m.Y H:i', strtotime($row['deadline'])) : 'Brak terminu' ?>
@@ -143,15 +145,31 @@ function priorityPL($p) {
                     <span class="badge priority"><?= priorityPL($row['priority']) ?></span>
                 </div>
 
-                <button
-                    class="btn btn-primary"
-                    type="button"
-                    style="margin-top:12px;"
-                    onclick='openTaskModal(<?= json_encode($row, JSON_HEX_APOS | JSON_HEX_QUOT) ?>)'
-                >
-                    Edytuj
-                </button>
+                <div style="display: flex; gap: 5px; margin-top: 15px;">
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        style="flex: 1;"
+                        onclick='openTaskModal(<?= json_encode($row, JSON_HEX_APOS | JSON_HEX_QUOT) ?>)'
+                    >
+                        Edytuj
+                    </button>
 
+                    <?php if ($row['status'] !== 'completed'): ?>
+                    <form action="complete_task.php" method="POST" style="margin: 0; flex: 1; display: flex;">
+                        <input type="hidden" name="task_id" value="<?= $row['id'] ?>">
+                        <input type="hidden" name="return_page" value="my_tasks">
+                        <input type="hidden" name="status" value="completed">
+                        <button class="btn btn-primary" type="submit" style="width: 100%; background-color: #28a745; border-color: #28a745;">Zakończ</button>
+                    </form>
+                    <?php endif; ?>
+                    
+                    <form action="delete_task.php" method="POST" onsubmit="return confirm('Czy na pewno chcesz usunąć to zadanie?');" style="margin: 0; flex: 1; display: flex;">
+                        <input type="hidden" name="task_id" value="<?= $row['id'] ?>">
+                        <input type="hidden" name="return_page" value="my_tasks">
+                        <button class="btn btn-secondary" type="submit" style="background-color: #dc3545; color: white; border-color: #dc3545; width: 100%;">Usuń</button>
+                    </form>
+                </div>
             </div>
         <?php endwhile; ?>
     </div>
@@ -202,7 +220,7 @@ function openTaskModal(task = null) {
                 <textarea name="description" rows="3" placeholder="Szczegóły zadania...">${task ? task.description : ""}</textarea>
 
                 <label>Data od</label>
-                <input type="datetime-local" name="start_date" value="${task ? formatForInput(task.start_date) : ""}">
+                <input type="datetime-local" name="start_date" value="${task ? formatForInput(task.start_date) : formatForInput(new Date().toISOString())}">
 
                 <label>Data do</label>
                 <input type="datetime-local" name="deadline" value="${task ? formatForInput(task.deadline) : ""}">

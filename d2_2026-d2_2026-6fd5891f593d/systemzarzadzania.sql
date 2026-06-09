@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 6.0.0-dev+20260409.dbb116703b
+-- version 6.0.0-dev+20260417.26bcf2d71e
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 01, 2026 at 11:10 AM
+-- Generation Time: Jun 08, 2026 at 12:37 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.30
 
@@ -30,13 +30,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `projects` (
   `id` int NOT NULL,
   `owner_id` int NOT NULL,
-  `name` varchar(150) COLLATE utf8mb4_polish_ci NOT NULL,
-  `description` text COLLATE utf8mb4_polish_ci,
-  `visibility` enum('public','private') COLLATE utf8mb4_polish_ci NOT NULL DEFAULT 'public',
-  `access_key` varchar(64) COLLATE utf8mb4_polish_ci DEFAULT NULL COMMENT 'Klucz dostępu – wymagany gdy visibility=private',
+  `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci,
+  `visibility` enum('public','private') CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL DEFAULT 'public',
+  `access_key` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci DEFAULT NULL COMMENT 'Klucz dostępu – wymagany gdy visibility=private',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `share_role` enum('admin','member','viewer','') CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL DEFAULT 'admin'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`id`, `owner_id`, `name`, `description`, `visibility`, `access_key`, `created_at`, `updated_at`, `share_role`) VALUES
+(1, 1, 'Nauka', '', 'private', '0c45b970b170b2f6ccaabf6f7fa81319', '2026-05-11 12:02:02', '2026-05-11 12:02:02', 'admin');
 
 -- --------------------------------------------------------
 
@@ -47,8 +55,15 @@ CREATE TABLE `projects` (
 CREATE TABLE `project_members` (
   `project_id` int NOT NULL,
   `user_id` int NOT NULL,
-  `role` enum('admin','member','viewer') COLLATE utf8mb4_polish_ci NOT NULL DEFAULT 'viewer'
+  `role` enum('admin','member','viewer') CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL DEFAULT 'viewer'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+--
+-- Dumping data for table `project_members`
+--
+
+INSERT INTO `project_members` (`project_id`, `user_id`, `role`) VALUES
+(1, 1, 'admin');
 
 -- --------------------------------------------------------
 
@@ -60,14 +75,14 @@ CREATE TABLE `tasks` (
   `id` int NOT NULL,
   `project_id` int DEFAULT NULL,
   `created_by` int DEFAULT NULL COMMENT 'Użytkownik który utworzył zadanie',
-  `title` varchar(200) COLLATE utf8mb4_polish_ci NOT NULL,
-  `description` text COLLATE utf8mb4_polish_ci,
-  `status` enum('todo','in_progress','completed') COLLATE utf8mb4_polish_ci NOT NULL DEFAULT 'todo',
-  `priority` enum('low','medium','high') COLLATE utf8mb4_polish_ci NOT NULL DEFAULT 'medium',
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci,
+  `status` enum('todo','in_progress','completed') CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL DEFAULT 'todo',
+  `priority` enum('low','medium','high') CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL DEFAULT 'medium',
   `deadline` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `backgroundColor` varchar(20) COLLATE utf8mb4_polish_ci NOT NULL,
+  `backgroundColor` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL,
   `start_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
@@ -79,11 +94,11 @@ INSERT INTO `tasks` (`id`, `project_id`, `created_by`, `title`, `description`, `
 (2, NULL, 1, 'Spotkania z ziomkiem', '', 'todo', 'low', '2026-04-22 23:59:00', '2026-04-22 13:24:20', '2026-04-28 17:11:23', '#33ff0a', '2026-04-21 04:00:00'),
 (3, NULL, 1, 'Spotkania z ziomkiem', '', 'todo', 'low', '2026-04-26 04:59:00', '2026-04-22 17:57:34', '2026-04-28 17:08:17', '#0a47ff', '2026-04-25 03:00:00'),
 (5, NULL, 1, 'Spotkania ', '', 'todo', 'medium', '2026-04-29 11:00:00', '2026-04-24 16:24:06', '2026-05-01 10:57:09', '#09f162', '2026-04-29 09:00:00'),
-(9, NULL, 1, 'Spotkania z ziomkiem', '', 'completed', 'high', '2026-04-25 09:00:00', '2026-04-27 18:09:58', '2026-04-28 17:09:11', '#ff6c0a', '2026-04-25 06:00:00'),
-(16, NULL, 1, 'próba', '', 'completed', 'high', '2026-05-21 23:59:00', '2026-05-01 10:57:56', '2026-05-01 12:50:04', '#ffdd00', '2026-05-19 00:00:00'),
-(18, NULL, 1, 'proba2', '', 'todo', 'medium', '2026-05-12 23:59:00', '2026-05-01 11:39:07', '2026-05-01 11:39:07', '#09fb39', '2026-05-12 00:00:00'),
-(19, NULL, 1, 'safsadsd', 'asdfsdgsdf', 'todo', 'low', '2026-05-13 23:59:00', '2026-05-01 11:42:04', '2026-05-01 11:42:04', '#3b82f6', '2026-05-13 00:00:00'),
-(20, NULL, 1, 'xcbzfg', 'sdfsgdsfg', 'todo', 'high', '2026-05-06 23:59:00', '2026-05-01 11:58:11', '2026-05-01 11:58:11', '#00fbff', '2026-05-06 00:00:00');
+(9, 1, 1, 'Spotkania z ziomkiem', '', 'completed', 'high', '2026-04-25 09:00:00', '2026-04-27 18:09:58', '2026-05-11 12:06:00', '#ff6c0a', '2026-04-25 06:00:00'),
+(16, NULL, 1, 'próba', '', 'completed', 'high', '2026-05-20 23:59:00', '2026-05-01 10:57:56', '2026-05-04 13:25:09', '#ffdd00', '2026-05-18 00:00:00'),
+(19, NULL, 1, 'cos', 'asdfa', 'in_progress', 'high', '2026-05-07 23:59:00', '2026-05-01 11:42:04', '2026-05-04 14:33:19', '#00b336', '2026-05-07 00:00:00'),
+(21, NULL, 1, 'lubie placki', '', 'todo', 'low', '2026-05-14 16:14:00', '2026-05-11 12:14:22', '2026-05-18 12:12:15', '#00378f', '2026-05-14 12:12:00'),
+(22, NULL, 2, 'Rower', '', 'todo', 'high', '2026-05-11 18:20:00', '2026-05-11 12:40:23', '2026-05-11 12:53:02', '#fbad04', '2026-05-11 16:45:00');
 
 -- --------------------------------------------------------
 
@@ -104,11 +119,11 @@ CREATE TABLE `task_assignments` (
 
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `login` varchar(32) COLLATE utf8mb4_polish_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL,
-  `email` varchar(64) COLLATE utf8mb4_polish_ci NOT NULL,
-  `first_name` varchar(64) COLLATE utf8mb4_polish_ci NOT NULL,
-  `last_name` varchar(64) COLLATE utf8mb4_polish_ci NOT NULL
+  `login` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL,
+  `email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL,
+  `first_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL,
+  `last_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
@@ -116,7 +131,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `email`, `first_name`, `last_name`) VALUES
-(1, 'PiotrM', '5817280a2398fc3779e880a3fedd1c589cb54efc1cd4ceffd84da177b377f421', 'losowy@email.com', 'Piotr', 'Misiula');
+(1, 'PiotrekM', '5817280a2398fc3779e880a3fedd1c589cb54efc1cd4ceffd84da177b377f421', 'losowy@email.com', 'Piotr', 'Misiula'),
+(2, 'JakubM', '76e3da50347c7df0056c7ae7b9276598be33a751d0877db453cf57c5ec2208cb', 'mickiewicz@gmail.com', 'Jakub', 'Mickiewicz');
 
 --
 -- Indexes for dumped tables
@@ -170,19 +186,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

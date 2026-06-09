@@ -24,7 +24,7 @@ if ($visibility !== 'public' && $visibility !== 'private') {
 $key = null;
 
 if ($visibility === 'private') {
-    $key = bin2hex(random_bytes(16));
+    $key = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
 }
 
 $stmt = $conn->prepare("
