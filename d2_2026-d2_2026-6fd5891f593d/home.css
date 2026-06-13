@@ -1,0 +1,274 @@
+.landing-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px 30px 60px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.landing-hero {
+    text-align: center;
+    padding: 60px 20px 48px;
+}
+
+.landing-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4f46e5;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 999px;
+    padding: 4px 14px;
+    margin-bottom: 22px;
+    letter-spacing: 0.03em;
+}
+
+.landing-hero h1 {
+    font-size: 38px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+    margin: 0 0 16px;
+}
+
+.landing-hero h1 span {
+    color: #6366f1;
+}
+
+.landing-hero p {
+    font-size: 16px;
+    color: #6b7280;
+    max-width: 520px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+}
+
+.landing-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.landing-btn-primary {
+    background: #6366f1;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    display: inline-block;
+}
+
+.landing-btn-primary:hover {
+    background: #4f46e5;
+}
+
+.landing-btn-secondary {
+    background: white;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    display: inline-block;
+}
+
+.landing-btn-secondary:hover {
+    background: #f9fafb;
+}
+
+/* Divider */
+.landing-divider {
+    border: none;
+    border-top: 1px solid #f3f4f6;
+    margin: 0;
+}
+
+/* Section labels */
+.landing-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 18px;
+}
+
+/* Features */
+.landing-features {
+    padding: 44px 0 40px;
+}
+
+.landing-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+}
+
+.landing-feature-card {
+    background: white;
+    border: 1px solid #f3f4f6;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.landing-feature-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.landing-feature-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 6px;
+}
+
+.landing-feature-card p {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Access */
+.landing-access {
+    padding: 40px 0;
+}
+
+.landing-access-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.landing-access-card {
+    border-radius: 14px;
+    border: 1px solid;
+    padding: 22px;
+}
+
+.landing-access-card.public {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.landing-access-card.private {
+    background: #fffbeb;
+    border-color: #fde68a;
+}
+
+.landing-access-card .access-icon {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.landing-access-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 6px;
+}
+
+.landing-access-card p {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Roles */
+.landing-roles {
+    padding: 40px 0;
+}
+
+.landing-roles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.landing-role-card {
+    background: #f9fafb;
+    border: 1px solid #f3f4f6;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.role-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+    letter-spacing: 0.03em;
+}
+
+.role-badge.admin {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.role-badge.user {
+    background: #eef2ff;
+    color: #4338ca;
+}
+
+.role-badge.guest {
+    background: #f3f4f6;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+}
+
+.landing-role-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 10px;
+}
+
+.landing-role-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.landing-role-card ul li {
+    font-size: 13px;
+    color: #6b7280;
+    padding: 3px 0;
+    line-height: 1.45;
+    display: flex;
+    gap: 6px;
+}
+
+.landing-role-card ul li::before {
+    content: "–";
+    color: #d1d5db;
+    flex-shrink: 0;
+}
+
+/* CTA */
+.landing-cta {
+    text-align: center;
+    padding: 44px 20px 10px;
+}
+
+.landing-cta p {
+    font-size: 15px;
+    color: #6b7280;
+    margin-bottom: 22px;
+}
